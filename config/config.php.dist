@@ -1,0 +1,82 @@
+<?php
+
+$adapterDatabase = env('DB_ADAPTER', 'mysql');
+$adapterLogger   = env('LOGGER_ADAPTER', 'file');
+
+$config = [
+    'database' => [
+        'drivers' => [
+            'mysql' => [
+                'adapter'  => 'Mysql',
+                'host'     => env('DB_HOST', '127.0.0.1'),
+                'dbname'   => env('DB_DATABASE', 'logger'),
+                'port'     => env('DB_PORT', 3306),
+                'username' => env('DB_USERNAME', 'root'),
+                'password' => env('DB_PASSWORD', 'root'),
+                'charset'  => env('DB_CHARSET', 'utf8'),
+            ],
+            'sqlite' => [
+                'adapter'  => 'Sqlite',
+                'dbname'   => env('DB_DATABASE', BASE_PATH . DIRECTORY_SEPARATOR .  'logger.sqlite'),
+            ],
+            'postgresql' => [
+                'adapter'  => 'Postgresql',
+                'host'     => env('DB_HOST', '127.0.0.1'),
+                'dbname'   => env('DB_DATABASE', 'logger'),
+                'port'     => env('DB_PORT', 5432),
+                'username' => env('DB_USERNAME', 'postgres'),
+                'password' => env('DB_PASSWORD', 'postgres'),
+                'schema'   => env('DB_SCHEMA', 'public'),
+            ],
+        ],
+    ],
+
+    'logger' => [
+        'drivers' => [
+            'file'    => [
+                'adapter' => 'File',
+                'name'    => sprintf(
+                    '%s/storage/logs/%s-%s.log',
+                    BASE_PATH,
+                    env('LOGGER_DEFAULT_FILENAME', 'application'),
+                    date('Ymd')
+                ),
+                'format'  => env('LOGGER_FORMAT', '[%date%][%type%] %message%'),
+                'level'   => env('LOGGER_LEVEL', \Phalcon\Logger::SPECIAL),
+            ],
+            'firephp' => [
+                'adapter' => 'Firephp',
+                'name'    => env('LOGGER_DEFAULT_FILENAME', 'application'),
+                'format'  => env('LOGGER_FORMAT', '[%date%][%type%] %message%'),
+                'level'   => env('LOGGER_LEVEL', 'debug'),
+            ],
+            'stream'  => [
+                'adapter' => 'Stream',
+                'name'    => env('LOGGER_DEFAULT_FILENAME', "php://stderr"),
+                'format'  => env('LOGGER_FORMAT', '[%date%][%type%] %message%'),
+                'level'   => env('LOGGER_LEVEL', 'debug'),
+            ],
+            'syslog'  => [
+                'adapter' => 'Syslog',
+                'name'    => env('LOGGER_DEFAULT_FILENAME', 'application'),
+                'format'  => env('LOGGER_FORMAT', '[%date%][%type%] %message%'),
+                'level'   => env('LOGGER_LEVEL', 'debug'),
+            ],
+        ]
+    ],
+
+    'application' => [
+        'migrationsDir' => BASE_PATH . '/migrations/',
+        'viewsDir'      => BASE_PATH . '/views/',
+        'baseUri'       => env('APP_BASE_URI', '/'),
+        'staticUri'     => env('APP_STATIC_URL', '/'),
+        'debug'         => env('APP_DEBUG', false),
+        'env'           => APP_ENV,
+        'timezone'      => env('APP_TIMEZONE', 'Europe/Moscow'),
+    ]
+];
+
+$config['database'] = $config['database']['drivers'][$adapterDatabase];
+$config['logger']   = $config['logger']['drivers'][$adapterLogger];
+
+$config = new \Phalcon\Config($config);

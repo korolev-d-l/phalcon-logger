@@ -1,0 +1,6 @@
+{
+  "migration" : {
+    "migrations": "migrations",
+    "config": "config/config.devtools.php"
+  }
+}

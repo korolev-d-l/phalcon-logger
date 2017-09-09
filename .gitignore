@@ -1,0 +1,7 @@
+config/config.php
+/vendor
+.env
+composer.lock
+.idea/*
+/nbproject/
+logger.sqlite

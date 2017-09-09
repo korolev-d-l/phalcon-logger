@@ -1,0 +1,50 @@
+{
+    "name": "Chameleon-m/phalcon-logger",
+    "description": "Phalcon logger",
+    "url": "https://github.com/Chameleon-m/phalcon-logger",
+    "license": "MIT",
+    "keywords": [
+        "phalcon",
+        "logger",
+        "api"
+    ],
+    "authors": [
+        {
+            "name": "Dmitry Korolev",
+            "email": "chameleonweb2012@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Logger\\": "library/"
+        },
+        "classmap": [
+            "models/"
+        ],
+        "files": [
+            "library/helper.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.0",
+        "ext-phalcon": "^3.2",
+        "ext-json": "*",
+        "vlucas/phpdotenv": "^2.4",
+        "dariuszp/cli-progress-bar": "^1.0",
+        "swiftmailer/swiftmailer": "^6.0"
+    },
+    "require-dev": {
+        "phalcon/devtools": "^3.2",
+        "phpunit/phpunit": "^6.3",
+        "phalcon/ide-stubs": "*"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "php -r \"file_exists('config/config.php') || copy('config/config.php.dist', 'config/config.php');\""
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
