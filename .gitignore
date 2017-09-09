@@ -5,3 +5,4 @@ composer.lock
 .idea/*
 /nbproject/
 logger.sqlite
+/.phalcon/migration-version
