@@ -1,8 +1,11 @@
 <?php
 
+const APP_ENV_TYPE_PRODUCTION  = 'production';
+const APP_ENV_TYPE_DEVELOPMENT = 'development';
+
 define('BASE_PATH', __DIR__);
-define('APP_ENV', getenv('APP_ENV') ?: 'development');
-define('APP_ENV_IS_DEV', APP_ENV === 'development');
+define('APP_ENV', getenv('APP_ENV') ?: APP_ENV_TYPE_DEVELOPMENT);
+define('APP_ENV_IS_DEV', APP_ENV === APP_ENV_TYPE_DEVELOPMENT);
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 

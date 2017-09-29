@@ -16,7 +16,7 @@ Model::setup(
 );
 
 $app->get('/', function () use ($app) {
-    echo $app->getService('view')->render('index');
+    echo "PHALCON LOGGER V0.2";
 });
 
 $app->get('/api/logs', function () use ($app) {
@@ -105,11 +105,91 @@ $app->post('/api/logs', function () use ($app) {
 });
 
 $app->notFound(function () use ($app) {
-    $app->response->setStatusCode(404, "Not Found")->sendHeaders();
-    echo $app->getService('view')->render('404');
+    header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
+    echo '404 Not Found' . PHP_EOL;
 });
 
 $app->error(function (\Exception $e) use ($app) {
-    $app->response->setStatusCode(500, "Internal Server Error")->sendHeaders();
-    echo $app->getService('view')->render('500', ['exception' => $e]);
+    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    echo '500 Internal Server Error' . PHP_EOL;
+    echo $e->getMessage() . PHP_EOL;
 });
+//$app->error(function ($exception) {
+//    echo json_encode([
+//            'code'    => $exception->getCode(),
+//            'status'  => 'error',
+//            'message' => $exception->getMessage(),
+//    ]);
+//});
+
+
+//micro:beforeHandleRoute
+//micro:beforeExecuteRoute
+//$app->before(function () use ($app) {
+//    $isStop = $app->request->getHeader('X-API-KEY') !== '6fa741de1bdd1d91830ba';
+//    if ($isStop) {
+//        $app->stop();
+//    }
+//    return !$isStop;
+//});
+//$app->before(new class implements \Phalcon\Mvc\Micro\MiddlewareInterface {
+//    public function call(\Phalcon\Mvc\Micro $app)
+//    {
+//        $isStop = $app->request->getHeader('X-API-KEY') !== '6fa741de1bdd1d91830ba';
+//        if ($isStop) {
+//            $app->stop();
+//        }
+//        return !$isStop;
+//    }
+//});
+
+//$app->getSharedService('eventsManager')->attach(
+//    'micro:beforeExecuteRoute',
+###
+//ACL
+###
+//$whitelist = [
+//    '10.4.6.1',
+//    '10.4.6.2',
+//    '10.4.6.3',
+//    '10.4.6.4',
+//];
+//$ipAddress = $application->request->getClientAddress();
+//
+//if (true !== array_key_exists($ipAddress, $whitelist)) {
+//    $this->response->redirect('/401');
+//    $this->response->send();
+//
+//    return false;
+//}
+//
+//return true;
+###
+//    function (Phalcon\Events\Event $event, $app) {
+//        if ($app->request->getHeader('X-API-KEY') !== '6fa741de1bdd1d91830ba') {
+//
+//            return false;
+//        }
+//    }
+//);
+
+//$app->after(
+//    function () use ($app) {
+//$payload = [
+//    'code'    => 200,
+//    'status'  => 'success',
+//    'message' => '',
+//    'payload' => $application->getReturnedValue(),
+//];
+//
+//$application->response->setJsonContent($payload);
+//$application->response->send();
+//
+//return true;
+//        $response = new Response();
+//        $response->setContentType('application/json', 'UTF-8');
+//        $response->setJsonContent($app->getReturnedValue());
+//        $response->send();
+//        return true;
+//    }
+//);

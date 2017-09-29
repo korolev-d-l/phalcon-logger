@@ -4,22 +4,18 @@
 if (PHP_SAPI === 'cli') {
     $di = new Phalcon\Di\FactoryDefault\Cli();
 } else {
-    $di = new Phalcon\Di\FactoryDefault();
-
-    $di->setShared('view', function () use ($config) {
-        $view = new Phalcon\Mvc\View\Simple();
-        $view->setViewsDir($config->application->viewsDir);
-        return $view;
-    });
+    $di = new Phalcon\Di();
+    $di->setShared('router', "Phalcon\\Mvc\\Router");
+    $di->setShared('response', "Phalcon\\Http\\Response");
+    $di->setShared('request', "Phalcon\\Http\\Request");
+    $di->setShared('modelsManager', "Phalcon\\Mvc\\Model\\Manager");
+    $di->setShared('modelsMetadata', "Phalcon\\Mvc\\Model\\MetaData\\Memory");
+    $di->setShared('filter', "Phalcon\\Filter");
 }
 
-$di->set('url', function () use ($config) {
-    $url = new Phalcon\Mvc\Url();
-    $url->setBasePath(BASE_PATH . DIRECTORY_SEPARATOR);
-    $url->setBaseUri($config->application->baseUri);
-    $url->setStaticBaseUri($config->application->staticUrl);
-    return $url;
-});
+if (APP_ENV_IS_DEV) {
+    $di->setShared('eventsManager', "Phalcon\\Events\\Manager");
+}
 
 $di->set('db', function () use ($config) {
     $connection = Phalcon\Db\Adapter\Pdo\Factory::load($config->database);

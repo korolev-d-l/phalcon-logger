@@ -34,7 +34,6 @@ class LogsTask extends Task
                 }
                 throw new \RuntimeException('Error save logs.');
             }
-            echo var_dump($log);
             if ($transaction) {
                 $this->getDI()->getShared('db')->commit();
             }
