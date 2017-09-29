@@ -4,7 +4,8 @@ use Phalcon\Mvc\Micro;
 
 define('BASE_PATH', dirname(__DIR__));
 define('APP_ENV', getenv('APP_ENV') ?: 'development');
-ini_set('display_errors', boolval('development' === APP_ENV));
+define('APP_ENV_IS_DEV', APP_ENV === 'development');
+ini_set('display_errors', boolval(APP_ENV_IS_DEV));
 error_reporting(E_ALL);
 
 try {
@@ -19,7 +20,7 @@ try {
 
 } catch (\Exception $e) {
     echo $e->getMessage();
-    if (APP_ENV === 'development') {
+    if (APP_ENV_IS_DEV) {
         echo '<pre>' . $e->getTraceAsString();
     }
 }

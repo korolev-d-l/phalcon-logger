@@ -19,7 +19,8 @@
             "Logger\\": "library/"
         },
         "classmap": [
-            "models/"
+            "models/",
+            "tasks/"
         ],
         "files": [
             "library/helper.php"
@@ -31,7 +32,8 @@
         "ext-json": "*",
         "vlucas/phpdotenv": "^2.4",
         "dariuszp/cli-progress-bar": "^1.0",
-        "swiftmailer/swiftmailer": "^6.0"
+        "swiftmailer/swiftmailer": "^6.0",
+        "php-amqplib/php-amqplib" : "^2.7"
     },
     "require-dev": {
         "phalcon/devtools": "^3.2",

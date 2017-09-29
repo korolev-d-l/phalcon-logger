@@ -2,6 +2,7 @@
 
 $adapterDatabase = env('DB_ADAPTER', 'mysql');
 $adapterLogger   = env('LOGGER_ADAPTER', 'file');
+$adapterQueue    = env('QUEUE_ADAPTER', 'rabbitmq');
 
 $config = [
     'database' => [
@@ -71,12 +72,24 @@ $config = [
         'baseUri'       => env('APP_BASE_URI', '/'),
         'staticUri'     => env('APP_STATIC_URL', '/'),
         'debug'         => env('APP_DEBUG', false),
-        'env'           => APP_ENV,
         'timezone'      => env('APP_TIMEZONE', 'Europe/Moscow'),
+    ],
+
+    'queue' => [
+        'drivers' => [
+            'rabbitmq' => [
+                'adapter'  => 'RabbitMq',
+                'host'     => env('QUEUE_HOST', 'localhost'),
+                'port'     => env('QUEUE_PORT', 5672),
+                'username' => env('QUEUE_USERNAME', 'guest'),
+                'password' => env('QUEUE_PASSWORD', 'guest'),
+            ]
+        ]
     ]
 ];
 
 $config['database'] = $config['database']['drivers'][$adapterDatabase];
 $config['logger']   = $config['logger']['drivers'][$adapterLogger];
+$config['queue']    = $config['queue']['drivers'][$adapterQueue];
 
 $config = new \Phalcon\Config($config);

@@ -35,6 +35,9 @@ Two methods are available:
 
 POST `/api/logs`
 
+POST `/api/logs?queue=1` - push in queue (for save need run task `php cli.php logs queue -v -t
+`)
+
 The data in it is passed to json. For example:
 
 POST `curl -X POST -d '{"entity":"Event","entityId":1000,"date":"2017-12-12 12:12:12","userId":3,"action":"create","diff":{"before":"test1","after":"test2"}}' http://phalcon-logger.dev/api/logs`
@@ -98,6 +101,15 @@ GET `curl -X GET http://phalcon-logger.dev/api/logs?page=3`
     "limit": 10
 }
 ```
+Attribute - Description
+
+items -	The set of records to be displayed at the current page\
+current - The current page\
+before - The previous page to the current one\
+next - The next page to the current one\
+last - The last page in the set of records\
+total_pages - The number of pages\
+total_items - The number of items in the source data\
 
 Requirements
 ------------

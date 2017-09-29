@@ -8,7 +8,7 @@
     <body>
         <div class="container">
             <h1>Internal Server Error :(</h1>
-            <em>This page is located in views/500.phtml</em>
+            <em><?php echo $exception->getMessage(); ?></em>
         </div>
     </body>
 </html>

@@ -71,11 +71,23 @@ $app->get('/api/logs', function () use ($app) {
 
 $app->post('/api/logs', function () use ($app) {
     $logEntry = $app->request->getJsonRawBody(true);
+    $isQueue  = $app->request->getQuery('queue');
 
     $response = new Response();
     $response->setContentType('application/json', 'UTF-8');
 
-    $log = new Logs();
+    if ($logEntry === false || $logEntry === null) {
+        $errMessage = $logEntry === null ? json_last_error_msg() : 'Error reading data';
+        $response->setStatusCode(400);
+        $response->setJsonContent([
+            'result' => 'error',
+            'errors' => [$errMessage]
+        ]);
+
+        return $response;
+    }
+
+    $log = $isQueue ? new LogsQueue() : new Logs();
 
     if ($log->save($logEntry) === false) {
         $response->setStatusCode(400);
@@ -97,10 +109,7 @@ $app->notFound(function () use ($app) {
     echo $app->getService('view')->render('404');
 });
 
-$app->error(function () use ($app) {
+$app->error(function (\Exception $e) use ($app) {
     $app->response->setStatusCode(500, "Internal Server Error")->sendHeaders();
-    echo $app->getService('view')->render('500');
+    echo $app->getService('view')->render('500', ['exception' => $e]);
 });
-
-
-
