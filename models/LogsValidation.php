@@ -17,5 +17,14 @@ class LogsValidation extends Validation
             )
         );
         $this->setFilters('date', Phalcon\Filter::FILTER_STRING);
+
+        $this->add([
+            'entity',
+            'entityId',
+            'date',
+            'userId',
+            'action',
+            'diff',
+        ], new Phalcon\Validation\Validator\PresenceOf());
     }
 }

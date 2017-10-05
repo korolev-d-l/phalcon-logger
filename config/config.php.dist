@@ -9,6 +9,7 @@ $config = [
         'drivers' => [
             'mysql' => [
                 'adapter'  => 'Mysql',
+                'dsn'      => env('DB_DSN_PHALCON', 'host=localhost;port=3306;dbname=logger;'),
                 'host'     => env('DB_HOST', '127.0.0.1'),
                 'dbname'   => env('DB_DATABASE', 'logger'),
                 'port'     => env('DB_PORT', 3306),
@@ -18,10 +19,12 @@ $config = [
             ],
             'sqlite' => [
                 'adapter'  => 'Sqlite',
+                'dsn'      => env('DB_DSN_PHALCON', ':memory:'),
                 'dbname'   => env('DB_DATABASE', BASE_PATH . DIRECTORY_SEPARATOR .  'logger.sqlite'),
             ],
             'postgresql' => [
                 'adapter'  => 'Postgresql',
+                'dsn'      => env('DB_DSN_PHALCON', 'host=localhost;port=5432;dbname=logger;user=postgres;password=postgres'),
                 'host'     => env('DB_HOST', '127.0.0.1'),
                 'dbname'   => env('DB_DATABASE', 'logger'),
                 'port'     => env('DB_PORT', 5432),

@@ -26,7 +26,7 @@ composer update
 
 For PostgreSQL:
 
-`psql -h <host> -d <database> -U <user_name> -p <port> -a -w -f data/final.sql`
+`psql -h <host> -d <database> -U <user_name> -p <port> -a -w -f tests/_data/dump.sql`
 
 Or run migration (use phalcon devtools):
 `phalcon migration run`
@@ -110,6 +110,19 @@ next - The next page to the current one\
 last - The last page in the set of records\
 total_pages - The number of pages\
 total_items - The number of items in the source data\
+
+### Testing
+First you need to re-generate base classes for test all suites:
+
+`vendor/bin/codecept build`
+
+Once the database is created and base clases re-generated, run the tests on a terminal:
+
+`vendor/bin/codecept run`
+
+or for detailed output:
+
+`vendor/bin/codecept run --debug`
 
 Requirements
 ------------

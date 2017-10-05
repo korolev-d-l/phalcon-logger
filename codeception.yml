@@ -1,0 +1,53 @@
+# can be changed while bootstrapping project
+actor: Tester
+paths:
+    # where the modules stored
+    tests: tests
+    log: tests/_output
+    # directory for fixture data
+    data: tests/_data
+    # directory for custom modules (helpers)
+    support: tests/_support
+    envs: tests/_envs
+settings:
+    # name of bootstrap that will be used
+    # each bootstrap file should be
+    # inside a suite directory.
+    bootstrap: _bootstrap.php
+    colors: true
+    # Tests (especially functional) can take a lot of memory
+    # We set a high limit for them by default.
+    memory_limit: 1024M
+    log: true
+
+coverage:
+    enabled: true
+    whitelist:
+      include:
+        - models/*
+
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+
+# Get params from .env.travis file
+params:
+    - tests/.env.travis
+
+# Global modules configuration.
+modules:
+    config:
+        Db:
+            dsn: "%DB_DSN%"
+            user: "%DB_USERNAME%"
+            password: "%DB_PASSWORD%"
+            dump: tests/_data/dump.sql
+            populate: true
+            cleanup: true
+        Phalcon:
+            bootstrap: "tests/_config/bootstrap.php"
+            # all database queries will be run in a transaction, which will be rolled back at the end of each test
+            cleanup: true
+            savepoints: true
+
+error_level: "E_ALL"

@@ -1,7 +1,7 @@
 <?php
 /** @var \Phalcon\Config $config */
 
-if (PHP_SAPI === 'cli') {
+if (PHP_SAPI === 'cli' && !APP_ENV_IS_TESTING) {
     $di = new Phalcon\Di\FactoryDefault\Cli();
 } else {
     $di = new Phalcon\Di();

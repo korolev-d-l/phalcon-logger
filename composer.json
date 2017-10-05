@@ -26,19 +26,26 @@
             "library/helper.php"
         ]
     },
+    "autoload-dev": {
+        "classmap": [
+            "tests/unit/"
+        ]
+    },
     "require": {
         "php": ">=7.0",
         "ext-phalcon": "^3.2",
         "ext-json": "*",
         "vlucas/phpdotenv": "^2.4",
         "dariuszp/cli-progress-bar": "^1.0",
-        "swiftmailer/swiftmailer": "^6.0",
         "php-amqplib/php-amqplib" : "^2.7"
     },
     "require-dev": {
         "phalcon/devtools": "^3.2",
         "phpunit/phpunit": "^6.3",
-        "phalcon/ide-stubs": "*"
+        "phalcon/ide-stubs": "*",
+        "fzaninotto/faker": "^1.7",
+        "codeception/codeception": "^2.3",
+        "codeception/mockery-module": "^0.2"
     },
     "scripts": {
         "post-root-package-install": [
