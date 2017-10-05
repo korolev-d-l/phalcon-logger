@@ -1,7 +1,7 @@
 {
-    "name": "Chameleon-m/phalcon-logger",
+    "name": "chameleon-m/phalcon-logger",
     "description": "Phalcon logger",
-    "url": "https://github.com/Chameleon-m/phalcon-logger",
+    "url": "https://github.com/chameleon-m/phalcon-logger",
     "license": "MIT",
     "keywords": [
         "phalcon",
