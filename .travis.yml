@@ -9,21 +9,50 @@ php:
 
 services:
   - postgresql
-  - mysql
 
 git:
   depth: 1
 
+cache:
+  apt: true
+  ccache: true
+  timeout: 691200
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+    - $HOME/cphalcon
+    - $HOME/ext
+
 env:
   global:
   - DB_ADAPTER=postgresql
-  - DB_ADAPTER=mysql
   - DB_DATABASE=logger_test
+  - ZEND_DONT_UNLOAD_MODULES=1
+  - CC="ccache gcc"
+  - PHALCON_VERSION="v3.2.2"
+
+before_install:
+  - export PHP_EXTENSION_DIR=$(php-config --extension-dir)
+  - phpenv config-rm xdebug.ini || true
+  - if [ ! -f "$HOME/cphalcon/$PHALCON_VERSION/tests/_ci/phalcon.ini" ]; then mkdir -p $HOME/cphalcon/$PHALCON_VERSION && git clone -q --depth=1 https://github.com/phalcon/cphalcon.git $HOME/cphalcon/$PHALCON_VERSION >/dev/null 2>&1; fi;
+
+install:
+  - travis_retry composer install --prefer-dist --no-interaction --quiet --no-ansi --no-progress --optimize-autoloader --dev --no-suggest --ignore-platform-reqs
+  - if [ ! -f $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so ]; then cd $HOME/cphalcon/$PHALCON_VERSION/build && bash ./install --phpize $(phpenv which phpize) --php-config $(phpenv which php-config) && mkdir -p $HOME/ext/$PHP_VERSION/$PHALCON_VERSION && cp $PHP_EXTENSION_DIR/phalcon.so $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so; fi;
+  - if [ -f $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so ]; then cp $HOME/ext/$PHP_VERSION/$PHALCON_VERSION/phalcon.so $PHP_EXTENSION_DIR/phalcon.so; fi;
+  - phpenv config-add $HOME/cphalcon/$PHALCON_VERSION/tests/_ci/phalcon.ini
+  - cd $TRAVIS_BUILD_DIR
+  - $(phpenv which php) --ri phalcon
 
 before_script:
   - sh -c "if [ '$DB_ADAPTER' = 'postgresql' ]; then psql -c 'DROP DATABASE IF EXISTS logger_test;' -U postgres; fi"
   - sh -c "if [ '$DB_ADAPTER' = 'postgresql' ]; then psql -c 'CREATE DATABASE logger_test;' -U postgres; fi"
-  - sh -c "if [ '$DB_ADAPTER' = 'mysql' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS logger_test;'; fi"
+  - sh -c "if [ '$DB_ADAPTER' = 'postgresql' ]; then psql -c '\i ${TRAVIS_BUILD_DIR}/tests/_data/dump.sql' -U postgres; fi"
+
+script:
+  - vendor/bin/codecept build
+  - vendor/bin/codecept run -v tests/unit
+
 addons:
   postgresql: "9.6"
 
