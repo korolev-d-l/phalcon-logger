@@ -143,3 +143,7 @@ License
 This project is open-sourced software licensed under the MIT License.
 
 See the LICENSE file for more information.
+
+[:packagist:]: https://packagist.org/packages/Chameleon-m/phalcon-logger
+[:ci:]: http://travis-ci.org/Chameleon-m/phalcon-logger
+[:license:]: https://github.com/Chameleon-m/phalcon-logger/blob/master/LICENSE.txt
