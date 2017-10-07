@@ -1,5 +1,11 @@
 # Logger
 
+[![Latest Version](https://img.shields.io/packagist/v/Chameleon-m/phalcon-logger.svg)][:packagist:]
+[![Software License](https://img.shields.io/github/license/mashape/apistatus.svg)][:license:]
+[![Total Downloads](https://img.shields.io/packagist/dt/Chameleon-m/phalcon-logger.svg)][:packagist:]
+[![Build Status](https://secure.travis-ci.org/Chameleon-m/phalcon-logger.svg?branch=master)][:ci:]
+
+
 How to install
 --------------
 ### Using Composer (*recommended*)
