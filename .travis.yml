@@ -48,6 +48,8 @@ before_script:
   - sh -c "if [ '$DB_ADAPTER' = 'postgresql' ]; then psql -c 'DROP DATABASE IF EXISTS logger_test;' -U postgres; fi"
   - sh -c "if [ '$DB_ADAPTER' = 'postgresql' ]; then psql -c 'CREATE DATABASE logger_test;' -U postgres; fi"
   - sh -c "if [ '$DB_ADAPTER' = 'postgresql' ]; then psql -c '\i ${TRAVIS_BUILD_DIR}/tests/_data/dump.sql' -U postgres; fi"
+  - cp ./tests/.env.travis ./tests/.env
+  - cp ./config/config.php.dist ./config/config.php
 
 script:
   - vendor/bin/codecept build
